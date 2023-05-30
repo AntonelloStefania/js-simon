@@ -6,7 +6,10 @@ let numbersDom = document.getElementById('random-numbers');
 numbersDom.innerHTML='';
 
 let userDom = document.getElementById('user-numbers');
-userDom.innerHTML=''
+userDom.innerHTML='';
+
+let result = document.getElementById('result');
+result.innerHtml=''
  
 //genero numeri casuali
 function randomNumber (min, max){
@@ -22,6 +25,9 @@ for(let i=0; i<5; i++){
 //posiziono i valori dell'array in contenitori singoli
 let numberDiv;
 let userNumbers;
+let rightNumbers= 0;
+
+//riempimento array numeri casuali
 for(let i=0; i<numbersArray.length;i++){
     numberDiv = document.createElement('div');
     numberDiv.classList.add('number');
@@ -29,38 +35,34 @@ for(let i=0; i<numbersArray.length;i++){
     numberDiv.innerText=numbersArray[i];
     numbersDom.appendChild(numberDiv)
     
+    //timeout per far scomparire le caselle prima dell'arrivo dei prompt
     setTimeout(function(){
         numbersDom.classList.remove('flex');
         numbersDom.classList.add('none');
-    },3*1000)
+    },timer*1000)
 
-let userDiv;
+    //timeout con controllo numeri corretti
+    let userDiv;
     setTimeout(function(){
        userNumbers= (parseInt(prompt('inserisci un numero')))
        console.log(userNumbers)
        if(numbersArray.includes(userNumbers)){
+           rightNumbers++
+           
            userDiv= document.createElement('div');
            userDiv.classList.add('correct-number');
            userDiv.classList.add('flex');
            userDiv.innerText = userNumbers;
            userDom.appendChild(userDiv);
-       }
-    },3*1200)
-
+        }
+    },timer*1050)
 }
 
+//timeout messaggio finale
+ setTimeout(function(){
+    result.classList.remove('none')
+    result.classList.add('block')
+    result.append(`hai indovinato ${rightNumbers} elementi`);
 
-
-
-// let bombsCells= document.getElementById('grid').children
-// for(let i=0; i< bombsCells.length; i++){
-//     let number = parseInt(bombsCells[i].innerText);
-
-//     if(bombArray.includes(number)){
-//        bombsCells[i].classList.add('bomb')
-//     }
-// }
-
-
-//funzione che gestisce il cambio classi
+},timer*1050)
 
